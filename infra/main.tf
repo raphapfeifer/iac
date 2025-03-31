@@ -43,16 +43,17 @@ resource "aws_autoscaling_group" "grupo" {
 }
 
 resource "aws_default_subnet" "subnet_1"{
-  availability_zones =  "${var.regiao_aws}a"
+  availability_zone =  "${var.regiao_aws}a"
 }
 
 resource "aws_default_subnet" "subnet_2"{
-  availability_zones =  "${var.regiao_aws}b"
+  availability_zone =  "${var.regiao_aws}b"
 }
 
 resource "aws_lb" "loadBalancer"{
   internal = false
   subnets = [ aws_default_subnet.subnet_1.id,aws_default_subnet.subnet_2.id ]
+  security_groups = [aws_security_group.acesso_geral.id]
 }
 
 resource "aws_lb_target_group" "alvoLoadBalancer"{
@@ -72,6 +73,6 @@ resource "aws_lb_listener" "entradaLoadBalancer"{
   }
 }
 
-resouce "aws_default_vpc" "default"{
+resource "aws_default_vpc" "default"{
 
 }
